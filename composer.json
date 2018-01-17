@@ -1,0 +1,36 @@
+{
+  "name": "nico/PHPDO-Database",
+  "description": "A lightweight PHP PDO database wrapper class.",
+  "type": "framework",
+  "license": "MIT",
+  "keywords": [
+    "database",
+    "lightweight",
+    "mysql",
+    "pdo",
+    "php",
+    "wrapper"
+  ],
+  "support": {
+    "issues": "https://github.com/turbopixel/PHPDO-Database/issues",
+    "source": "https://github.com/turbopixel/PHPDO-Database"
+  },
+  "authors": [
+    {
+      "name": "Nico Hemkes",
+      "email": "nico@hemk.es"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-pdo": "*"
+  },
+  "suggest": {
+    "ext-pdo_mysql": "MySQL database"
+  },
+  "autoload": {
+    "psr-4": {
+      "PHPDO\\": "/lib"
+    }
+  }
+}
