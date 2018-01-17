@@ -24,7 +24,7 @@ class PHPDO {
    * @param string $password Database password
    * @param string $database Databasename
    */
-  public function connect(string $host, int $port, string $user, string $password, string $database) {
+  public function connect(string $host, int $port = 3306, string $user, string $password, string $database) {
 
     try {
       $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password);
