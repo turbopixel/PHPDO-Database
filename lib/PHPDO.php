@@ -37,7 +37,7 @@ class PHPDO {
   }
 
   /**
-   * Execute query
+   * Execute raw query
    *
    * @param string $query
    *
