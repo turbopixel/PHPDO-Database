@@ -38,18 +38,6 @@ class PHPDO {
   }
 
   /**
-   * Execute raw query
-   *
-   * @param string $query
-   *
-   * @return int
-   */
-  public function execute(string $query) : int {
-
-    return $this->PDO->exec($query);
-  }
-
-  /**
    * Runs prepared statement
    *
    * @param string $query SQL Query
@@ -65,6 +53,18 @@ class PHPDO {
     $pdoStmnt->execute($mapping);
 
     return $pdoStmnt;
+  }
+
+  /**
+   * Execute raw query
+   *
+   * @param string $query
+   *
+   * @return int
+   */
+  public function execute(string $query) : int {
+
+    return $this->PDO->exec($query);
   }
 
   /**
