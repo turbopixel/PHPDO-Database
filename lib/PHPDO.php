@@ -71,7 +71,7 @@ class PHPDO {
    * Insert data into table
    *
    * @param string $table Tablename
-   * @param array $columns Column->Value array
+   * @param array $columns [Column => Value] array
    *
    * @return string
    * @throws Exception
