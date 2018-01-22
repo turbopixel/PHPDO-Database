@@ -96,7 +96,7 @@ class PHPDO {
     }
 
     $columnList  = implode(",", $columnName);
-    $valuePrefix = str_repeat("?", count($columnName));
+    $valuePrefix = rtrim(str_repeat("?,", count($columnName)), ",");
 
     $query    = "INSERT INTO {$table} ({$columnList}) VALUES ({$valuePrefix})";
     $pdoStmnt = $this->PDO->prepare($query);
