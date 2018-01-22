@@ -21,18 +21,18 @@ class PHPDO {
    * Create database connection
    *
    * @param string $host Hostname like localhost or 127.0.0.1
-   * @param int $port MySQL port
    * @param string $user Database user
    * @param string $password Database password
    * @param string $database Databasename
+   * @param int $port MySQL port
    */
-  public function connect(string $host, int $port = 3306, string $user, string $password, string $database) {
+  public function connect( string $host, string $database, string $user, string $password, int $port = 3306 ) {
 
     try {
-      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password);
+      $this->PDO = new PDO( "mysql:host={$host};dbname={$database};port={$port}", $user, $password );
     }
-    catch (PDOException $e) {
-      die($e->getMessage());
+    catch ( PDOException $e ) {
+      die( $e->getMessage() );
     }
 
   }
@@ -44,9 +44,9 @@ class PHPDO {
    *
    * @return int
    */
-  public function execute(string $query) : int {
+  public function execute( string $query ) : int {
 
-    return $this->PDO->exec($query);
+    return $this->PDO->exec( $query );
   }
 
   /**
@@ -59,10 +59,10 @@ class PHPDO {
    *
    * @return PDOStatement
    */
-  public function prepare(string $query, array $mapping) : PDOStatement {
+  public function prepare( string $query, array $mapping ) : PDOStatement {
 
-    $pdoStmnt = $this->PDO->prepare($query);
-    $pdoStmnt->execute($mapping);
+    $pdoStmnt = $this->PDO->prepare( $query );
+    $pdoStmnt->execute( $mapping );
 
     return $pdoStmnt;
   }
@@ -76,27 +76,31 @@ class PHPDO {
    * @return string
    * @throws Exception
    */
-  public function insert(string $table, array $columns) : string {
+  public function insert( string $table, array $columns ) : string {
 
-    if (empty($table)) {
-      throw new Exception("unknown table");
+    if ( empty( $table ) ) {
+      throw new Exception( "unknown table" );
     }
 
-    if (empty($columns)) {
-      throw new Exception("unknown mapping");
+    if ( empty( $columns ) ) {
+      throw new Exception( "unknown mapping" );
     }
 
-    $columns = array_unique($columns);
+    $columns         = array_unique( $columns );
+    $preparedColumns = [];
 
-    foreach($columns AS $key => $value){
+    foreach ( $columns AS $key => $value ) {
 
-      $columnArr[] = $key;
-      $valueArr[] = "'{$value}'";
+      $preparedColumns[ $key ] = $value;
 
     }
+    echo "<pre>";
+    print_r( $preparedColumns );
+    echo "<hr>in " . print_r( debug_backtrace( 0, 1 )[0]['file'] . ':' . debug_backtrace( 0, 1 )[0]['line'], 1 );
+    exit;
 
-    $query = "INSERT INTO {$table} (" . implode(", ", $columnArr) . ") VALUES (" . implode(", ", $valueArr) . ")";
-    $this->PDO->query($query);
+    $query = "INSERT INTO {$table} (" . implode( ", ", $columnArr ) . ") VALUES (" . implode( ", ", $valueArr ) . ")";
+    $this->PDO->query( $query );
 
     return $this->PDO->lastInsertId();
   }
