@@ -88,19 +88,17 @@ class PHPDO {
 
     $columns         = array_unique($columns);
     $preparedColumns = [];
-    $columnAlias     = [];
+    $columnName      = [];
 
     foreach ($columns AS $key => $value) {
       $columnName[]      = $key;
       $preparedColumns[] = $value;
-      $columnAlias[]     = "?";
-
     }
 
-    $columnStr = implode(",", $columnName);
-    $valueStr  = implode(", ", $columnAlias);
+    $columnList  = implode(",", $columnName);
+    $valuePrefix = str_repeat("?", count($columnName));
 
-    $query    = "INSERT INTO {$table} ({$columnStr}) VALUES ({$valueStr})";
+    $query    = "INSERT INTO {$table} ({$columnList}) VALUES ({$valuePrefix})";
     $pdoStmnt = $this->PDO->prepare($query);
     $pdoStmnt->execute($preparedColumns);
 
