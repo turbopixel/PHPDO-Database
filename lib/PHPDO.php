@@ -78,14 +78,6 @@ class PHPDO {
    */
   public function insert(string $table, array $columns) : string {
 
-    if (empty($table)) {
-      throw new Exception("unknown table");
-    }
-
-    if (empty($columns)) {
-      throw new Exception("unknown mapping");
-    }
-
     $columns         = array_unique($columns);
     $preparedColumns = [];
     $columnName      = [];
