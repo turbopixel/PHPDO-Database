@@ -97,4 +97,19 @@ class PHPDO {
     return $this->PDO->lastInsertId();
   }
 
+  /**
+   * Run query and return row count
+   *
+   * @param string $query
+   * @param array $mapping
+   *
+   * @return int
+   */
+  public function count(string $query, array $mapping) : int {
+
+    $pdoStmnt = $this->prepare($query, $mapping);
+
+    return $pdoStmnt->rowCount();
+  }
+
 }
