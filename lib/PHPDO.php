@@ -90,9 +90,8 @@ class PHPDO {
     $columnList  = implode(",", $columnName);
     $valuePrefix = rtrim(str_repeat("?,", count($columnName)), ",");
 
-    $query    = "INSERT INTO {$table} ({$columnList}) VALUES ({$valuePrefix})";
-    $pdoStmnt = $this->PDO->prepare($query);
-    $pdoStmnt->execute($preparedColumns);
+    $query = "INSERT INTO {$table} ({$columnList}) VALUES ({$valuePrefix})";
+    $this->prepare($query, $preparedColumns);
 
     return $this->PDO->lastInsertId();
   }
@@ -105,7 +104,7 @@ class PHPDO {
    *
    * @return int
    */
-  public function count(string $query, array $mapping) : int {
+  public function count(string $query, array $mapping = []) : int {
 
     $pdoStmnt = $this->prepare($query, $mapping);
 
