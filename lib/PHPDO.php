@@ -18,6 +18,17 @@ class PHPDO {
   protected $PDO;
 
   /**
+   * @var array
+   */
+  protected $logs = [];
+
+  /**
+   * Log queries
+   * @var bool
+   */
+  public $debug = false;
+
+  /**
    * Create database connection
    *
    * @param string $host Hostname like localhost or 127.0.0.1
@@ -44,6 +55,26 @@ class PHPDO {
   }
 
   /**
+   * Add last query to log
+   *
+   * @param string $query
+   */
+  protected function addLog(string $query) {
+    if ($this->debug === true) {
+      $this->logs[] = $query;
+    }
+  }
+
+  /**
+   * Get query logs
+   *
+   * @return array
+   */
+  public function getLog() : array {
+    return $this->logs;
+  }
+
+  /**
    * Runs prepared statement
    *
    * @param string $query SQL Query
@@ -58,6 +89,8 @@ class PHPDO {
     $pdoStmnt = $this->PDO->prepare($query);
     $pdoStmnt->execute($mapping);
 
+    $this->addLog($pdoStmnt->queryString);
+
     return $pdoStmnt;
   }
 
@@ -69,6 +102,8 @@ class PHPDO {
    * @return int
    */
   public function execute(string $query) : int {
+
+    $this->addLog($query);
 
     return $this->PDO->exec($query);
   }
@@ -111,7 +146,6 @@ class PHPDO {
    * @return int
    */
   public function count(string $query, array $mapping = []) : int {
-
     $pdoStmnt = $this->prepare($query, $mapping);
 
     return $pdoStmnt->rowCount();
