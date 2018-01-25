@@ -8,6 +8,9 @@ use PDOException;
 use PDOStatement;
 
 /**
+ * PHPDO
+ * a simple php pdo database wrapper class for everyone.
+ *
  * @author Nico Hemkes
  */
 class PHPDO {
