@@ -74,7 +74,18 @@ class PHPDO {
    * @return array
    */
   public function getLog() : array {
+
     return $this->logs;
+  }
+
+  /**
+   * Returns the last query
+   *
+   * @return mixed
+   */
+  public function getLastQuery() {
+
+    return end($this->logs);
   }
 
   /**
