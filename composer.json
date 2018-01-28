@@ -1,5 +1,5 @@
 {
-  "name": "nico/PHPDO-Database",
+  "name": "turbopixel/PHPDO-Database",
   "description": "A lightweight PHP PDO database wrapper class.",
   "type": "framework",
   "license": "MIT",
