@@ -9,7 +9,7 @@ use PDOStatement;
 
 /**
  * PHPDO
- * a simple php pdo database wrapper class for everyone.
+ * A lightweight PHP PDO database wrapper class for everyone.
  *
  * @author Nico Hemkes
  */
@@ -82,7 +82,7 @@ class PHPDO {
   /**
    * Returns the last query
    *
-   * @return mixed
+   * @return string
    */
   public function getLastQuery() {
 

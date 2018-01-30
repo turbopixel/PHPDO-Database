@@ -50,10 +50,9 @@
 </pre>
           <hr>
           <p class="card-text">
-            <code><pre>&lt;?php
+          <pre>&lt;?php
 $PHPDO = new PHPDO();
 $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");</pre>
-            </code>
           </p>
         </div>
       </div>
@@ -165,6 +164,50 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
           <p class="card-text">
           <pre>$PHPDO->count("SELECT id FROM user");</pre>
           <pre>$PHPDO->count("SELECT id FROM user WHERE mail = :mail", ["mail" => "john.doe@example.com]);</pre>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- getLog -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> getLog()</h5>
+        <div class="card-body">
+          <p>Get query logs. Attribute <code>$PHPDO->debug</code> must be <code>true</code>!</p>
+          <hr>
+          <pre>
+/**
+* @return array
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+          <pre>$PHPDO->getLog();</pre>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- getLastQuery -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> getLastQuery()</h5>
+        <div class="card-body">
+          <p>Get last query. Attribute <code>$PHPDO->debug</code> must be <code>true</code>!</p>
+          <hr>
+          <pre>
+/**
+* @return string
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+          <pre>$PHPDO->getLastQuery();</pre>
           </p>
         </div>
       </div>
