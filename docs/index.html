@@ -1,107 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PHPDO Documentation - PHP PDO Wrapper Class</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="utf-8">
+
+  <title>robots.txt viewer chrome extension</title>
+  <meta name="robots" content="all">
+  <meta name="author" content="Nico Hemkes">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <meta name="apple-mobile-web-app-title" content="robots">
+  <meta name="application-name" content="robots">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="google-site-verification" content="bqpKDySBRUFxoPUXVAiDISvS-OA7-IVInE6zvNu3gqo">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<section class="hero is-primary is-bold">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        PHPDO
-      </h1>
-      <h2 class="subtitle">
-        A lightweight php pdo database wrapper class.
-      </h2>
-    </div>
+<noscript>
+  <div class="txt--center bg--red p1">
+    <p class="fnt--white bold">Please enable JavaScript to see the page correctly.</p>
   </div>
-</section>
+</noscript>
 
-<nav class="navbar is-light" role="navigation" aria-label="dropdown navigation">
+<div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <a class="navbar-item" href="index.html" title="Overview">Overview</a>
-    <a class="navbar-item" href="install.html" title="Download and installation">Install</a>
-    <a class="navbar-item" href="debug.html" title="Debugging tipps">debug</a>
-    <a class="navbar-item" href="prepare.html" title="method prepare()">prepare()</a>
-    <a class="navbar-item" href="execute.html" title="method execute()">execute()</a>
-    <a class="navbar-item" href="insert.html" title="method insert()">insert()</a>
-    <a class="navbar-item" href="count.html" title="method count()">count()</a>
-    <a class="navbar-item" href="getLastQuery.html" title="method getLastQuery()">getLastQuery()</a>
-    <a class="navbar-item" href="getLog.html" title="method getLog()">getLog()</a>
+    <h1 class="display-4">PHPDO</h1>
+    <p class="lead">A lightweight PHP PDO database wrapper class.</p>
   </div>
-</nav>
+</div>
 
-<section class="section">
-  <div class="container">
-    <h1 class="title">PHPDO Documentation</h1>
-    <h2 class="subtitle">A lightweight php pdo database wrapper class for everyone.</h2>
-    <br/>
-    <div class="notification is-warning has-text-centered">
-      In developement.
-    </div>
-    <br/>
+<div class="container">
 
-    <div class="tile is-ancestor">
-      <div class="tile is-vertical is-12">
-        <div class="tile">
-          <div class="tile is-parent is-vertical">
-            <article class="tile is-child notification is-light ">
-              <p class="title">Simple database class</p>
-              <p class="content">Based on <a href="http://php.net/manual/de/book.pdo.php" target="_blank">php pdo</a></p>
-            </article>
-            <article class="tile is-child notification is-light ">
-              <p class="title">Lightweight</p>
-              <p class="content">One file, less than 10kb.</p>
-            </article>
-            <article class="tile is-child notification is-light ">
-              <p class="title">Easy to use</p>
-              <p class="content">Just type your sql query and fetch result</p>
-            </article>
-          </div>
-          <div class="tile is-parent is-vertical">
-            <article class="tile is-child notification is-light ">
-              <p class="title">Requirements</p>
-              <div class="content">
-                <ul>
-                  <li>PHP Version =< 7.0</li>
-                  <li>PHP PDO with MySQL driver</li>
-                  <li>MySQL knowledge</li>
-                </ul>
-                <small>thats all&hellip;</small>
-              </div>
-            </article>
-            <article class="tile is-child notification is-light ">
-              <p class="title">Open Source</p>
-              <div class="content">
-                The class PHPDO source and this documentation are open source.
-                <br/>
-                <br/>
-                <a href="https://github.com/turbopixel/PHPDO-Database" target="_blank" rel="contents" class="button">GitHub</a>
-              </div>
-            </article>
-          </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> connect()</h5>
+        <div class="card-body">
+          <p>Create database connection.</p>
+          <hr>
+          <pre>
+/**
+* @param string $host       Host
+* @param string $database   Database
+* @param string $user       Username
+* @param string $password   Password
+* @param int $port = 3306   MySQL server port
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+            <code><pre>&lt;?php
+$PHPDO = new PHPDO();
+$PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");</pre>
+            </code>
+          </p>
         </div>
       </div>
     </div>
-
   </div>
-</section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-        <strong>PHPDO</strong> by <a href="https://hemk.es/">Turbopixel</a>. The <a href="https://github.com/turbopixel/PHPDO-Database" rel="contents">source code</a> is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
-      </p>
-    </div>
-  </div>
-</footer>
-
+</div>
 </body>
 </html>
