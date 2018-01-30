@@ -34,10 +34,10 @@ class PHPDO {
   /**
    * Create database connection
    *
-   * @param string $host Hostname like localhost or 127.0.0.1
+   * @param string $host Hostname
+   * @param string $database Database name
    * @param string $user Database user
    * @param string $password Database password
-   * @param string $database Databasename
    * @param int $port MySQL port
    */
   public function connect(string $host, string $database, string $user, string $password, int $port = 3306) {
@@ -92,8 +92,8 @@ class PHPDO {
   /**
    * Runs prepared statement
    *
-   * @param string $query SQL Query
-   * @param array $mapping Column mapping
+   * @param string $query MySQL Query
+   * @param array $mapping Data mapping
    *
    * @link http://php.net/manual/de/pdo.prepare.php
    *

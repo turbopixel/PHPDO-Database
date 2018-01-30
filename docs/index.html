@@ -32,6 +32,7 @@
 <div class="container">
 
   <div class="row">
+    <!-- connect -->
     <div class="col-sm-12">
       <div class="card">
         <h5 class="card-header"><em>public</em> connect()</h5>
@@ -40,11 +41,11 @@
           <hr>
           <pre>
 /**
-* @param string $host       Host
-* @param string $database   Database
-* @param string $user       Username
-* @param string $password   Password
-* @param int $port = 3306   MySQL server port
+* @param string $host     Hostname
+* @param string $database Database name
+* @param string $user     Database user
+* @param string $password Database password
+* @param int $port        MySQL port
 */
 </pre>
           <hr>
@@ -58,6 +59,123 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
       </div>
     </div>
   </div>
+  <br/>
+  <div class="row">
+    <!-- prepare -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> prepare()</h5>
+        <div class="card-body">
+          <p>Run prepared statement.</p>
+          <hr>
+          <pre>
+/**
+* @param string $query     MySQL Query
+* @param array  $mapping   Data mapping
+*
+* @return PDOStatement
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->prepare("SELECT id FROM user WHERE id = :userid", ["userid" => 553]);</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- execute -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> execute()</h5>
+        <div class="card-body">
+          <p>Run raw mysql statement.</p>
+          <hr>
+          <pre>
+/**
+* @param string $query     MySQL Query
+*
+* @return int
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- insert -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> insert()</h5>
+        <div class="card-body">
+          <p>Insert new data records.</p>
+          <hr>
+          <pre>
+/**
+* @param string $table Tablename
+* @param array $columns [Column => Value] array
+*
+* @return string
+* @throws Exception
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->insert("user", [
+  "name"   => "John Doe",
+  "mail"   => "john.doe@example.com",
+  "active" => 1
+]);</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- count -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> count()</h5>
+        <div class="card-body">
+          <p>Get num of rows by prepared statement.</p>
+          <hr>
+          <pre>
+/**
+* @param string $query     MySQL Query
+* @param array $mapping    Data mapping
+*
+* @return int
+*/
+</pre>
+          <hr>
+          <p class="card-text">
+          <pre>$PHPDO->count("SELECT id FROM user");</pre>
+          <pre>$PHPDO->count("SELECT id FROM user WHERE mail = :mail", ["mail" => "john.doe@example.com]);</pre>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="my-5 pt-5 text-muted text-center text-small">
+  <p class="mb-1">Made in germany by <a href="https://hemk.es/" rel="author">Turbopixel</a>.</p>
+</footer>
 
 </div>
 </body>
