@@ -143,7 +143,7 @@ class PHPDO {
    *
    * @return PDOStatement
    */
-  public function prepare(string $query, array $mapping) : PDOStatement {
+  public function prepare(string $query, array $mapping = []) : PDOStatement {
 
     try {
       $pdoStmnt = $this->PDO->prepare($query);
