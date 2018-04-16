@@ -2,7 +2,6 @@
 
 namespace PHPDO;
 
-use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -29,7 +28,7 @@ class PHPDO {
    * Log queries
    * @var bool
    */
-  public $debug = false;
+  public $logging = false;
 
   /**
    * Create database connection
@@ -64,7 +63,7 @@ class PHPDO {
    * @param string $query
    */
   protected function addLog(string $query) {
-    if ($this->debug === true) {
+    if ($this->logging === true) {
       $this->logs[] = $query;
     }
   }
@@ -76,7 +75,7 @@ class PHPDO {
    */
   public function getLog() : array {
 
-    return $this->logs;
+    return $this->logs ?? [];
   }
 
   /**
@@ -100,7 +99,6 @@ class PHPDO {
    * @return PDOStatement
    */
   public function prepare(string $query, array $mapping) : PDOStatement {
-
     $pdoStmnt = $this->PDO->prepare($query);
     $pdoStmnt->execute($mapping);
 
@@ -117,53 +115,9 @@ class PHPDO {
    * @return int
    */
   public function execute(string $query) : int {
-
-    $this->addLog($query);
+    $this->addLog(query);
 
     return $this->PDO->exec($query);
-  }
-
-  /**
-   * Insert data into table
-   *
-   * @param string $table Tablename
-   * @param array $columns [Column => Value] array
-   *
-   * @return string
-   * @throws Exception
-   */
-  public function insert(string $table, array $columns) : string {
-
-    $columns         = array_unique($columns);
-    $preparedColumns = [];
-    $columnName      = [];
-
-    foreach ($columns AS $key => $value) {
-      $columnName[]      = $key;
-      $preparedColumns[] = $value;
-    }
-
-    $columnList  = implode(",", $columnName);
-    $valuePrefix = rtrim(str_repeat("?,", count($columnName)), ",");
-
-    $query = "INSERT INTO {$table} ({$columnList}) VALUES ({$valuePrefix})";
-    $this->prepare($query, $preparedColumns);
-
-    return $this->PDO->lastInsertId();
-  }
-
-  /**
-   * Run query and return row count
-   *
-   * @param string $query
-   * @param array $mapping
-   *
-   * @return int
-   */
-  public function count(string $query, array $mapping = []) : int {
-    $pdoStmnt = $this->prepare($query, $mapping);
-
-    return $pdoStmnt->rowCount();
   }
 
 }
