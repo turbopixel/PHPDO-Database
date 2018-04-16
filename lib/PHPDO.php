@@ -120,7 +120,13 @@ class PHPDO {
    * @return PDOStatement
    */
   public function query(string $query) {
-    $queryObj = $this->PDO->query($query);
+
+    try {
+      $queryObj = $this->PDO->query($query);
+    }
+    catch (\Exception $e) {
+      die($e->getCode() . ": " . $e->getMessage());
+    }
 
     $this->addLog($query, gettype($queryObj));
 
@@ -138,8 +144,14 @@ class PHPDO {
    * @return PDOStatement
    */
   public function prepare(string $query, array $mapping) : PDOStatement {
-    $pdoStmnt = $this->PDO->prepare($query);
-    $execute  = $pdoStmnt->execute($mapping);
+
+    try {
+      $pdoStmnt = $this->PDO->prepare($query);
+      $execute  = $pdoStmnt->execute($mapping);
+    }
+    catch (\Exception $e) {
+      die($e->getCode() . ": " . $e->getMessage());
+    }
 
     $this->addLog($pdoStmnt->queryString, $execute);
 
@@ -154,7 +166,13 @@ class PHPDO {
    * @return int
    */
   public function execute(string $query) : int {
-    $exec = $this->PDO->exec($query);
+
+    try {
+      $exec = $this->PDO->exec($query);
+    }
+    catch (\Exception $e) {
+      die($e->getCode() . ": " . $e->getMessage());
+    }
 
     $this->addLog($query, $exec);
 
