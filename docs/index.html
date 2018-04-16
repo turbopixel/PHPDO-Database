@@ -60,6 +60,63 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
   </div>
   <br/>
   <div class="row">
+    <!-- query -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> getPdo()</h5>
+        <div class="card-body">
+          <p>Returns the PHP PDO object.</p>
+          <hr>
+          <pre>
+/**
+ * Get pdo object
+ *
+ * @return PDO
+ *
+ * @throws \Exception
+ */
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->getPdo();</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- query -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> query()</h5>
+        <div class="card-body">
+          <p>Create pdo object from query.</p>
+          <hr>
+          <pre>
+/**
+ * Runs raw mysql query
+ *
+ * @param string $query
+ *
+ * @return PDOStatement
+ */
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->query("SELECT id FROM user WHERE active = 1");
+print_r( $pdoStmnt->fetch() );</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
     <!-- prepare -->
     <div class="col-sm-12">
       <div class="card">
@@ -113,70 +170,12 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
   </div>
   <br/>
   <div class="row">
-    <!-- insert -->
-    <div class="col-sm-12">
-      <div class="card">
-        <h5 class="card-header"><em>public</em> insert()</h5>
-        <div class="card-body">
-          <p>Insert new data records.</p>
-          <hr>
-          <pre>
-/**
-* @param string $table Tablename
-* @param array $columns [Column => Value] array
-*
-* @return string
-* @throws Exception
-*/
-</pre>
-          <hr>
-          <p class="card-text">
-            <code>
-              <pre>$PHPDO->insert("user", [
-  "name"   => "John Doe",
-  "mail"   => "john.doe@example.com",
-  "active" => 1
-]);</pre>
-            </code>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br/>
-  <div class="row">
-    <!-- count -->
-    <div class="col-sm-12">
-      <div class="card">
-        <h5 class="card-header"><em>public</em> count()</h5>
-        <div class="card-body">
-          <p>Get num of rows by prepared statement.</p>
-          <hr>
-          <pre>
-/**
-* @param string $query     MySQL Query
-* @param array $mapping    Data mapping
-*
-* @return int
-*/
-</pre>
-          <hr>
-          <p class="card-text">
-          <pre>$PHPDO->count("SELECT id FROM user");</pre>
-          <pre>$PHPDO->count("SELECT id FROM user WHERE mail = :mail", ["mail" => "john.doe@example.com]);</pre>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br/>
-  <div class="row">
     <!-- getLog -->
     <div class="col-sm-12">
       <div class="card">
         <h5 class="card-header"><em>public</em> getLog()</h5>
         <div class="card-body">
-          <p>Get query logs. Attribute <code>$PHPDO->debug</code> must be <code>true</code>!</p>
+          <p>Get query logs. Attribute <code>$PHPDO->logging</code> must be <code>true</code>!</p>
           <hr>
           <pre>
 /**
@@ -198,7 +197,7 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
       <div class="card">
         <h5 class="card-header"><em>public</em> getLastQuery()</h5>
         <div class="card-body">
-          <p>Get last query. Attribute <code>$PHPDO->debug</code> must be <code>true</code>!</p>
+          <p>Get last query. Attribute <code>$PHPDO->logging</code> must be <code>true</code>!</p>
           <hr>
           <pre>
 /**
@@ -220,6 +219,5 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
   <p class="mb-1">Made in germany by <a href="https://hemk.es/" rel="author">Turbopixel</a>.</p>
 </footer>
 
-</div>
 </body>
 </html>
