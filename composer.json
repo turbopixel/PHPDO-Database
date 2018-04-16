@@ -1,6 +1,7 @@
 {
   "name": "turbopixel/phpdo-database",
   "description": "A lightweight PHP PDO database wrapper class.",
+  "homepage": "http://phpdo.hemk.es/",
   "type": "framework",
   "license": "MIT",
   "keywords": [
@@ -13,12 +14,15 @@
   ],
   "support": {
     "issues": "https://github.com/turbopixel/PHPDO-Database/issues",
-    "source": "https://github.com/turbopixel/PHPDO-Database"
+    "source": "https://github.com/turbopixel/PHPDO-Database",
+    "docs": "http://phpdo.hemk.es/"
   },
   "authors": [
     {
       "name": "Nico Hemkes",
-      "email": "git@hemk.es"
+      "email": "git@hemk.es",
+      "homepage": "https://hemk.es/",
+      "role": "Developer"
     }
   ],
   "require": {
