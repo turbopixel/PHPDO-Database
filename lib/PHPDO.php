@@ -15,7 +15,7 @@ use PDOStatement;
 class PHPDO {
 
   /**
-   * @var PDO
+   * @var \PDO
    */
   protected $PDO;
 
@@ -29,6 +29,22 @@ class PHPDO {
    * @var bool
    */
   public $logging = false;
+
+  /**
+   * Get pdo object
+   *
+   * @return PDO
+   *
+   * @throws \Exception
+   */
+  public function getPdo() : \PDO {
+
+    if ($this->PDO instanceof \PDO) {
+      return $this->PDO;
+    }
+
+    throw new \Exception("PDO object lost", 1523905129030);
+  }
 
   /**
    * Create database connection
@@ -52,7 +68,7 @@ class PHPDO {
       $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $opt);
     }
     catch (PDOException $e) {
-      die($e->getMessage());
+      die($e->getCode() . ": " . $e->getMessage());
     }
 
   }
@@ -60,16 +76,24 @@ class PHPDO {
   /**
    * Add last query to log
    *
-   * @param string $query
+   * @param string $query MySQL Query
+   * @param mixed $result PDO Result
    */
-  protected function addLog(string $query) {
+  protected function addLog(string $query, $result) {
+
     if ($this->logging === true) {
-      $this->logs[] = $query;
+
+      $this->logs[] = [
+        "query"  => $query,
+        "result" => $result
+      ];
+
     }
+
   }
 
   /**
-   * Get query logs
+   * Get all query logs
    *
    * @return array
    */
@@ -89,6 +113,21 @@ class PHPDO {
   }
 
   /**
+   * Runs raw mysql query
+   *
+   * @param string $query
+   *
+   * @return PDOStatement
+   */
+  public function query(string $query) {
+    $queryObj = $this->PDO->query($query);
+
+    $this->addLog($query, gettype($queryObj));
+
+    return $queryObj;
+  }
+
+  /**
    * Runs prepared statement
    *
    * @param string $query MySQL Query
@@ -100,24 +139,26 @@ class PHPDO {
    */
   public function prepare(string $query, array $mapping) : PDOStatement {
     $pdoStmnt = $this->PDO->prepare($query);
-    $pdoStmnt->execute($mapping);
+    $execute  = $pdoStmnt->execute($mapping);
 
-    $this->addLog($pdoStmnt->queryString);
+    $this->addLog($pdoStmnt->queryString, $execute);
 
     return $pdoStmnt;
   }
 
   /**
-   * Execute raw query
+   * Execute raw mysql query
    *
    * @param string $query
    *
    * @return int
    */
   public function execute(string $query) : int {
-    $this->addLog(query);
+    $exec = $this->PDO->exec($query);
 
-    return $this->PDO->exec($query);
+    $this->addLog($query, $exec);
+
+    return $exec;
   }
 
 }
