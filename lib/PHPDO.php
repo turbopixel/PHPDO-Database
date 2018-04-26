@@ -54,18 +54,24 @@ class PHPDO {
    * @param string $user Database user
    * @param string $password Database password
    * @param int $port MySQL port
+   * @param array $options PDO attributes (http://php.net/manual/de/pdo.setattribute.php)
    */
-  public function connect(string $host, string $database, string $user, string $password, int $port = 3306) {
+  public function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
 
-    $opt = [
-      PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-      PDO::ATTR_EMULATE_PREPARES   => false,
-      PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"'
-    ];
+    // custom options
+    if (!empty($options)) {
+
+      $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"'
+      ];
+
+    }
 
     try {
-      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $opt);
+      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
     }
     catch (PDOException $e) {
       die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
