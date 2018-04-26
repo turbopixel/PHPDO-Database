@@ -71,6 +71,8 @@ class PHPDO {
       die($e->getCode() . ": " . $e->getMessage());
     }
 
+    // set PHPDO instance
+    DB::setInstance($this);
   }
 
   /**
