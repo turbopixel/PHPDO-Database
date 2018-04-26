@@ -68,7 +68,7 @@ class PHPDO {
       $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $opt);
     }
     catch (PDOException $e) {
-      die($e->getCode() . ": " . $e->getMessage());
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
     // set PHPDO instance
@@ -127,7 +127,7 @@ class PHPDO {
       $queryObj = $this->PDO->query($query);
     }
     catch (\Exception $e) {
-      die($e->getCode() . ": " . $e->getMessage());
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
     $this->addLog($query, gettype($queryObj));
@@ -152,7 +152,7 @@ class PHPDO {
       $execute  = $pdoStmnt->execute($mapping);
     }
     catch (\Exception $e) {
-      die($e->getCode() . ": " . $e->getMessage());
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
     $this->addLog($pdoStmnt->queryString, $execute);
@@ -173,7 +173,7 @@ class PHPDO {
       $exec = $this->PDO->exec($query);
     }
     catch (\Exception $e) {
-      die($e->getCode() . ": " . $e->getMessage());
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
     $this->addLog($query, $exec);
