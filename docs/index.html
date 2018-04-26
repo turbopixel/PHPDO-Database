@@ -74,8 +74,6 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
           <hr>
           <pre>
 /**
- * Get pdo object
- *
  * @return PDO
  *
  * @throws \Exception
@@ -102,11 +100,11 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
           <hr>
           <pre>
 /**
- * Runs raw mysql query
- *
  * @param string $query
  *
  * @return PDOStatement
+ *
+ * @throws \Exception
  */
 </pre>
           <hr>
@@ -135,6 +133,8 @@ print_r( $pdoStmnt->fetch() );</pre>
 * @param array  $mapping   Data mapping
 *
 * @return PDOStatement
+ *
+ * @throws \Exception
 */
 </pre>
           <hr>
@@ -161,6 +161,8 @@ print_r( $pdoStmnt->fetch() );</pre>
 * @param string $query     MySQL Query
 *
 * @return int
+ *
+ * @throws \Exception
 */
 </pre>
           <hr>
