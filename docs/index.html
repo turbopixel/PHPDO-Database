@@ -29,7 +29,7 @@
       A lightweight PHP PDO database wrapper class.
     </p>
     <p>
-      Version: 1.0.21 | <code>composer require turbopixel/phpdo-database</code>
+      Version: 1.1.0 | <code>composer require turbopixel/phpdo-database</code>
     </p>
   </div>
 </div>
@@ -85,6 +85,29 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
               <pre>$PHPDO->getPdo();</pre>
             </code>
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- query -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>class</em> DB()</h5>
+        <div class="card-body">
+          <p>Get current PHPDO instance</p>
+          <hr>
+          <pre>/**
+ * Get PHPDO instance
+ *
+ * @return PHPDO
+ *
+ * @throws \Exception
+ */</pre>
+          <hr>
+          <pre>$PHPDO = DB::getInstance()</pre>
+          <pre>DB::getInstance()->query("SELECT * FROM user")->fetchAll();</pre>
         </div>
       </div>
     </div>
