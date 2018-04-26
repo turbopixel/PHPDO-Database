@@ -126,7 +126,7 @@ class PHPDO {
     try {
       $queryObj = $this->PDO->query($query);
     }
-    catch (\Exception $e) {
+    catch (PDOException $e) {
       die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
@@ -151,7 +151,7 @@ class PHPDO {
       $pdoStmnt = $this->PDO->prepare($query);
       $execute  = $pdoStmnt->execute($mapping);
     }
-    catch (\Exception $e) {
+    catch (PDOException $e) {
       die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
@@ -172,7 +172,7 @@ class PHPDO {
     try {
       $exec = $this->PDO->exec($query);
     }
-    catch (\Exception $e) {
+    catch (PDOException $e) {
       die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
