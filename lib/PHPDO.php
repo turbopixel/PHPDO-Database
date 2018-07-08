@@ -158,7 +158,7 @@ class PHPDO {
       $execute  = $pdoStmnt->execute($mapping);
     }
     catch (PDOException $e) {
-      die("error on line " . __LINE__ . ": " . $e->getCode());
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
     }
 
     $this->addLog($pdoStmnt->queryString, $execute);
