@@ -187,4 +187,27 @@ class PHPDO {
     return $exec;
   }
 
+  /**
+   * Check table exists in mysql
+   *
+   * @param string $table
+   *
+   * @return bool
+   */
+  public function isTable(string $table) : bool {
+
+    try {
+      $pdoStmnt = $this->query(sprintf("DESCRIBE `%s`", $table));
+    }
+    catch (PDOException $e) {
+      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
+    }
+
+    if ($pdoStmnt instanceof PDOStatement) {
+      return $pdoStmnt->rowCount() > 0;
+    }
+
+    return false;
+  }
+
 }

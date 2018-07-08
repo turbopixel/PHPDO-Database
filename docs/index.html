@@ -74,7 +74,7 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
           <hr>
           <pre>
 /**
- * @return PDO
+ * @return \PDO
  *
  * @throws \Exception
  */
@@ -99,9 +99,7 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
           <p>Get current PHPDO instance</p>
           <hr>
           <pre>/**
- * Get PHPDO instance
- *
- * @return PHPDO
+ * @return \PHPDO
  *
  * @throws \Exception
  */</pre>
@@ -152,13 +150,13 @@ print_r( $pdoStmnt->fetch() );</pre>
           <hr>
           <pre>
 /**
-* @param string $query     MySQL Query
-* @param array  $mapping   Data mapping
-*
-* @return PDOStatement
+ * @param string $query     MySQL Query
+ * @param array  $mapping   Data mapping
+ *
+ * @return PDOStatement
  *
  * @throws \Exception
-*/
+ */
 </pre>
           <hr>
           <p class="card-text">
@@ -181,17 +179,43 @@ print_r( $pdoStmnt->fetch() );</pre>
           <hr>
           <pre>
 /**
-* @param string $query     MySQL Query
-*
-* @return int
+ * @param string $query     MySQL Query
+ *
+ * @return int
  *
  * @throws \Exception
-*/
+ */
 </pre>
           <hr>
           <p class="card-text">
             <code>
               <pre>$PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");</pre>
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <!-- execute -->
+    <div class="col-sm-12">
+      <div class="card">
+        <h5 class="card-header"><em>public</em> isTable()</h5>
+        <div class="card-body">
+          <p>Check database table exists.</p>
+          <hr>
+          <pre>
+/**
+ * @param string $table
+ *
+ * @return bool
+ */
+</pre>
+          <hr>
+          <p class="card-text">
+            <code>
+              <pre>$PHPDO->isTable("user_settings")</pre>
             </code>
           </p>
         </div>
@@ -209,8 +233,8 @@ print_r( $pdoStmnt->fetch() );</pre>
           <hr>
           <pre>
 /**
-* @return array
-*/
+ * @return array
+ */
 </pre>
           <hr>
           <p class="card-text">
@@ -231,8 +255,8 @@ print_r( $pdoStmnt->fetch() );</pre>
           <hr>
           <pre>
 /**
-* @return string
-*/
+ * @return string
+ */
 </pre>
           <hr>
           <p class="card-text">
