@@ -74,7 +74,7 @@ class PHPDO {
       $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
     }
     catch (PDOException $e) {
-      die("error on line " . __LINE__ . ": " . $e->getCode());
+      throw new PDOException($e->getMessage(), 1534363929089);
     }
 
     // set PHPDO instance
@@ -133,7 +133,7 @@ class PHPDO {
       $queryObj = $this->PDO->query($query);
     }
     catch (PDOException $e) {
-      die("error on line " . __LINE__ . ": " . $e->getCode());
+      throw new PDOException($e->getMessage(), 1534363955802);
     }
 
     $this->addLog($query, gettype($queryObj));
@@ -158,7 +158,7 @@ class PHPDO {
       $execute  = $pdoStmnt->execute($mapping);
     }
     catch (PDOException $e) {
-      die(__CLASS__ . "->" . __FUNCTION__ . "() " . $e->getCode() . ": " . $e->getMessage());
+      throw new PDOException($e->getMessage(), 1534363953164);
     }
 
     $this->addLog($pdoStmnt->queryString, $execute);
@@ -179,7 +179,7 @@ class PHPDO {
       $exec = $this->PDO->exec($query);
     }
     catch (PDOException $e) {
-      die("error on line " . __LINE__ . ": " . $e->getCode());
+      throw new PDOException($e->getMessage(), 1534363963076);
     }
 
     $this->addLog($query, $exec);
@@ -200,7 +200,7 @@ class PHPDO {
       $pdoStmnt = $this->query(sprintf("DESCRIBE `%s`", $table));
     }
     catch (PDOException $e) {
-      die("error on line " . __LINE__ . ": " . $e->getCode());
+      throw new PDOException($e->getMessage(), 1534363969842);
     }
 
     if ($pdoStmnt instanceof PDOStatement) {
