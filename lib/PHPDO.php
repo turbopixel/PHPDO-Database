@@ -71,7 +71,7 @@ class PHPDO {
     }
 
     try {
-      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
+      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port};charset=utf8", $user, $password, $options);
     }
     catch (PDOException $e) {
       throw new PDOException($e->getMessage(), 1534363929089);
