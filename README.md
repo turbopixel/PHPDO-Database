@@ -18,7 +18,7 @@ $PHPDO = new PHPDO();
 $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
 ```
 
-#### Get instance
+### Get instance
 
 **DB::getInstance()** returns PHPDO instance
 ```php
@@ -31,7 +31,7 @@ DB::getInstance()->query("SELECT * FROM user")->fetchAll();
 $PHPDO->getPdo();
 ```
 
-#### Run MySQL query
+### Run MySQL query
 
 **query**
 ```php
@@ -49,14 +49,14 @@ $PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");
 $PHPDO->prepare("SELECT id FROM user WHERE id = :userid", ["userid" => 553]);
 ```
 
-#### Helper
+### Helper
 
 **Check table exists (MySQL only)**
 ```php
 $PHPDO->isTable("user_settings")
 ```
 
-### Internal class logging
+## Internal class logging
 
 All SQL Queries stored in PHPDO::$logs (array)
 
