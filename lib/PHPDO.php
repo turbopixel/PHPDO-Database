@@ -2,13 +2,15 @@
 
 namespace PHPDO;
 
+use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
 
 /**
  * PHPDO
- * A lightweight PHP PDO database wrapper class for everyone.
+ * A lightweight PHP PDO database wrapper class for everyone
+ * with internal log stash
  *
  * @author Nico Hemkes
  */
@@ -35,7 +37,7 @@ class PHPDO {
    *
    * @return PDO
    *
-   * @throws \Exception
+   * @throws Exception
    */
   public function getPdo() : \PDO {
 
@@ -43,7 +45,7 @@ class PHPDO {
       return $this->PDO;
     }
 
-    throw new \Exception("PDO object lost", 1523905129030);
+    throw new Exception("PDO object lost", 1523905129030);
   }
 
   /**
