@@ -18,20 +18,20 @@ $PHPDO = new PHPDO();
 $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
 ```
 
----
+#### Get instance
 
-#### Get PDO Instance
+**PDO instance**
+
 ```php
 $PHPDO->getPdo();
 ```
-use the class DB
+
+**DB::getInstance()** returns PHPDO instance
 ```php
 DB::getInstance()->query("SELECT * FROM user")->fetchAll();
 ```
 
----
-
-#### Execute SQL Queries
+#### Run MySQL query
 
 **query**
 ```php
