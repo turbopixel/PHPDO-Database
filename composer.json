@@ -4,6 +4,7 @@
   "homepage": "http://phpdo.hemk.es/",
   "type": "framework",
   "license": "MIT",
+  "version": "1.1.4",
   "keywords": [
     "database",
     "lightweight",
@@ -26,7 +27,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.2",
     "ext-pdo": "*"
   },
   "suggest": {

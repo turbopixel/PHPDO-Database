@@ -57,8 +57,11 @@ class PHPDO {
    * @param string $password Database password
    * @param int $port MySQL port
    * @param array $options PDO attributes (http://php.net/manual/de/pdo.setattribute.php)
+   *
+   * @throws Exception
    */
   public function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
+    $this->checkPhpVersion();
 
     // custom options
     if (!empty($options)) {
@@ -151,9 +154,9 @@ class PHPDO {
    * @param string $query MySQL Query
    * @param array $mapping Data mapping
    *
+   * @return PDOStatement
    * @link http://php.net/manual/de/pdo.prepare.php
    *
-   * @return PDOStatement
    */
   public function prepare(string $query, array $mapping = []) : PDOStatement {
 
@@ -222,10 +225,24 @@ class PHPDO {
    *
    * @param string $message
    */
-  private function logError(string $message){
+  private function logError(string $message) {
 
     if (function_exists('error_log')) {
       error_log($message);
+    }
+
+  }
+
+  /**
+   * PHP version check
+   *
+   * @throws Exception
+   */
+  private function checkPhpVersion() {
+
+    if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 2 !== true) {
+      $this->logError('php version must be 7.2 or higher');
+      throw new Exception('php version must be 7.2 or higher');
     }
 
   }
