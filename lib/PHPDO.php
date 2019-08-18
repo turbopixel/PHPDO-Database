@@ -74,6 +74,7 @@ class PHPDO {
       $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port};charset=utf8", $user, $password, $options);
     }
     catch (PDOException $e) {
+      $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363929089);
     }
 
@@ -133,6 +134,7 @@ class PHPDO {
       $queryObj = $this->PDO->query($query);
     }
     catch (PDOException $e) {
+      $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363955802);
     }
 
@@ -158,6 +160,7 @@ class PHPDO {
       $execute  = $pdoStmnt->execute($mapping);
     }
     catch (PDOException $e) {
+      $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363953164);
     }
 
@@ -179,6 +182,7 @@ class PHPDO {
       $exec = $this->PDO->exec($query);
     }
     catch (PDOException $e) {
+      $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363963076);
     }
 
@@ -200,6 +204,7 @@ class PHPDO {
       $pdoStmnt = $this->query(sprintf("DESCRIBE `%s`", $table));
     }
     catch (PDOException $e) {
+      $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363969842);
     }
 
@@ -208,6 +213,19 @@ class PHPDO {
     }
 
     return false;
+  }
+
+  /**
+   * Internal php error log
+   *
+   * @param string $message
+   */
+  private function logError(string $message){
+
+    if (function_exists('error_log')) {
+      error_log($message);
+    }
+
   }
 
 }
