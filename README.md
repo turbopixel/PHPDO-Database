@@ -20,15 +20,15 @@ $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword
 
 #### Get instance
 
-**PDO instance**
-
-```php
-$PHPDO->getPdo();
-```
-
 **DB::getInstance()** returns PHPDO instance
 ```php
 DB::getInstance()->query("SELECT * FROM user")->fetchAll();
+```
+
+**PHP PDO instance**
+
+```php
+$PHPDO->getPdo();
 ```
 
 #### Run MySQL query
@@ -49,8 +49,6 @@ $PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");
 $PHPDO->prepare("SELECT id FROM user WHERE id = :userid", ["userid" => 553]);
 ```
 
----
-
 #### Helper
 
 **Check table exists (MySQL only)**
@@ -58,14 +56,12 @@ $PHPDO->prepare("SELECT id FROM user WHERE id = :userid", ["userid" => 553]);
 $PHPDO->isTable("user_settings")
 ```
 
----
-
 ### Internal class logging
 
-All sqls stored in PHPDO::$logs
+All SQL Queries stored in PHPDO::$logs (array)
 
 **Get internal query logs**  
-Get query logs. Attribute $PHPDO->logging must be true!
+Get query logs. Attribute `$PHPDO->logging` must be set `true`
 ```php
 $PHPDO->getLog(); // returns an array
 ```
