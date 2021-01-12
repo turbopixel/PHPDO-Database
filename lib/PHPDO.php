@@ -37,6 +37,8 @@ class PHPDO {
 
   /**
    * PHPDO constructor.
+   *
+   * @throws Exception
    */
   public function __construct() {
     self::$_instance = $this;
@@ -52,8 +54,8 @@ class PHPDO {
   private function checkPhpVersion() {
 
     if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 2 !== true) {
-      $this->logError('php version must be 7.2 or higher');
-      throw new Exception('php version must be 7.2 or higher');
+      $this->logError('wrong php version. 7.2 or higher required');
+      throw new Exception('wrong php version. 7.2 or higher required');
     }
 
   }
@@ -64,11 +66,9 @@ class PHPDO {
    * @param string $message
    */
   private function logError(string $message) {
-
     if (function_exists('error_log')) {
       error_log($message);
     }
-
   }
 
   /**
@@ -189,17 +189,51 @@ class PHPDO {
   public function prepare(string $query, array $mapping = []) : PDOStatement {
 
     try {
-      $pdoStmnt = $this->PDO->prepare($query);
-      $execute  = $pdoStmnt->execute($mapping);
+      if ($this->PDO instanceof PDO) {
+        $pdoStmnt = $this->PDO->prepare($query);
+        $execute  = $pdoStmnt->execute($mapping);
+      } else {
+        throw new PDOException("PDO object lost", 1121415);
+      }
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363953164);
+      throw new PDOException($e->getMessage(), 1121413);
     }
 
     $this->addLog($pdoStmnt->queryString, $execute);
 
     return $pdoStmnt;
+  }
+
+  /**
+   * Runs raw mysql query
+   *
+   * @param string $query
+   *
+   * @return PDOStatement|false
+   */
+  public function query(string $query) {
+
+    try {
+      if ($this->PDO instanceof PDO) {
+        $queryObj = $this->PDO->query($query);
+      } else {
+        throw new PDOException("PDO object lost", 1121409);
+      }
+    }
+    catch (PDOException $e) {
+      $this->logError($e->getMessage());
+      throw new PDOException($e->getMessage(), 1534363955802);
+    }
+
+    $this->addLog($query, gettype($queryObj));
+
+    if ($queryObj instanceof PDOStatement) {
+      return $queryObj;
+    }
+
+    return false;
   }
 
   /**
@@ -212,7 +246,11 @@ class PHPDO {
   public function execute(string $query) : void {
 
     try {
-      $this->PDO->exec($query);
+      if ($this->PDO instanceof PDO) {
+        $this->PDO->exec($query);
+      } else {
+        throw new PDOException("PDO object lost", 1121115);
+      }
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
@@ -241,32 +279,6 @@ class PHPDO {
 
     if ($pdoStmnt instanceof PDOStatement) {
       return $pdoStmnt->rowCount() > 0;
-    }
-
-    return false;
-  }
-
-  /**
-   * Runs raw mysql query
-   *
-   * @param string $query
-   *
-   * @return PDOStatement|false
-   */
-  public function query(string $query) {
-
-    try {
-      $queryObj = $this->PDO->query($query);
-    }
-    catch (PDOException $e) {
-      $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363955802);
-    }
-
-    $this->addLog($query, gettype($queryObj));
-
-    if ($queryObj instanceof PDOStatement) {
-      return $queryObj;
     }
 
     return false;
