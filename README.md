@@ -17,7 +17,7 @@ composer require turbopixel/phpdo-database
 
 ## Example
 
-```phpregexp
+```php
 $PHPDO = new PHPDO();
 $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
 
@@ -28,7 +28,7 @@ $PHPDO->query("SELECT stars FROM github")->fetchAll();
 
 ### Create database connection
 
-```phpregexp
+```php
 $PHPDO = new PHPDO();
 $PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
 ```
@@ -39,19 +39,19 @@ After this, you can use the PHPDO class from everywhere.
 
 **\PHPDO\PHPDO::get()** returns the PHPDO instance
 
-```phpregexp
+```php
 \PHPDO\PHPDO::get()
 ```
 
 Example: Run a query
 
-```phpregexp
+```php
 \PHPDO\PHPDO::get()->query("SELECT * FROM github")->fetchAll();
 ```
 
 **Get PDO instance**
 
-```phpregexp
+```php
 \PHPDO\PHPDO::get()->getPdo()
 ```
 
@@ -59,20 +59,20 @@ Example: Run a query
 
 **query**
 
-```phpregexp
+```php
 $PHPDO->query("SELECT id FROM user WHERE active = 1");
 print_r( $pdoStmnt->fetch() );
 ```
 
 **execute**
 
-```phpregexp
+```php
 $PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");
 ```
 
 **Prepared Statement**
 
-```phpregexp
+```php
 $PHPDO->prepare("UPDATE github SET stars = stars+1 WHERE id = :id", ["id" => 1234]);
 ```
 
@@ -80,13 +80,13 @@ $PHPDO->prepare("UPDATE github SET stars = stars+1 WHERE id = :id", ["id" => 123
 
 ### fetch() - Select a single row
 
-```phpregexp
+```php
 $PHPDO->fetch("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
 `$PHPDO->fetch()` is a helper method and replace this:
 
-```phpregexp
+```php
 $rows  = [];
 $stmnt = $PHPDO->prepare("SELECT * FROM github WHERE id = ?", [
   1234
@@ -103,19 +103,19 @@ print_r($rows);
 
 ### fetchAll() - Select multiple rows
 
-```phpregexp
+```php
 $PHPDO->fetchAll("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
 ### rowCount() - Count rows
 
-```phpregexp
+```php
 $PHPDO->rowCount("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
 ### Check table exists (MySQL only)
 
-```phpregexp
+```php
 $PHPDO->isTable("user_settings")
 ```
 
@@ -125,20 +125,20 @@ All SQL Queries stored in PHPDO::$logs (array)
 
 **Enable logging**
 
-```phpregexpregexp
+```phpregexp
 $PHPDO->logging = true
 ```
 
 **Get internal query logs**  
 Get query logs. Attribute `$PHPDO->logging` must be set `true`
 
-```phpregexp
+```php
 $PHPDO->getLog(); // returns an array
 ```
 
 **Get last query log**  
 Class attribute $PHPDO->logging must be true!
 
-```phpregexp
+```php
 $PHPDO->getLastQuery(); // returns last sql as array
 ```
