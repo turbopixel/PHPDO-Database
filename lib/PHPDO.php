@@ -158,6 +158,25 @@ class PHPDO {
   }
 
   /**
+   * Add last query to log
+   *
+   * @param string $query MySQL Query
+   * @param mixed $result PDO Result
+   */
+  protected function addLog(string $query, $result = NULL) {
+
+    if ($this->logging === true) {
+
+      $this->logs[] = [
+        "query"  => $query,
+        "result" => $result
+      ];
+
+    }
+
+  }
+
+  /**
    * Runs prepared statement
    *
    * @param string $query MySQL Query
@@ -181,25 +200,6 @@ class PHPDO {
     $this->addLog($pdoStmnt->queryString, $execute);
 
     return $pdoStmnt;
-  }
-
-  /**
-   * Add last query to log
-   *
-   * @param string $query MySQL Query
-   * @param mixed $result PDO Result
-   */
-  protected function addLog(string $query, $result = NULL) {
-
-    if ($this->logging === true) {
-
-      $this->logs[] = [
-        "query"  => $query,
-        "result" => $result
-      ];
-
-    }
-
   }
 
   /**
