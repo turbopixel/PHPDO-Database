@@ -20,11 +20,13 @@ class PHPDO {
    * @var PHPDO
    */
   protected static $_instance;
+
   /**
    * Log queries
    * @var bool
    */
   public $logging = false;
+
   /**
    * @var PDO
    */
@@ -282,6 +284,80 @@ class PHPDO {
     }
 
     return false;
+  }
+
+  /**
+   * @param $function
+   * @param $sql
+   * @param $map
+   *
+   * @return bool|int|mixed|null
+   * @throws Exception
+   */
+  private function load($function, $sql, $map) {
+    $data = NULL;
+
+    // run MySQL query
+    $stmt = $this->prepare($sql, $map);
+
+    // call result method
+    if ($stmt instanceof PDOStatement) {
+
+      switch ($function) {
+        case "rowCount":
+          $data = $stmt->rowCount();
+          break;
+        default:
+          if (method_exists($stmt, $function)) {
+            $data = $stmt->{$function}(PDO::FETCH_ASSOC);
+          } else {
+            throw new Exception("Class DB: missing method: {$function}");
+          }
+      }
+
+      return $data;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param string $sql
+   * @param array $map
+   * @param mixed $default
+   *
+   * @return bool|array
+   * @throws Exception
+   */
+  public function fetch(string $sql, array $map = [], $default = []) : ?array {
+    $data = $this->load("fetch", $sql, $map);
+
+    return empty($data) ? $default : $data;
+  }
+
+  /**
+   * @param string $sql
+   * @param array $map
+   * @param mixed $default
+   *
+   * @return bool|array
+   * @throws Exception
+   */
+  public function fetchAll(string $sql, array $map = [], $default = []) : ?array {
+    $data = $this->load("fetchAll", $sql, $map);
+
+    return empty($data) ? $default : $data;
+  }
+
+  /**
+   * @param string $sql
+   * @param array $map
+   *
+   * @return int
+   * @throws Exception
+   */
+  public function rowCount(string $sql, array $map = []) : int {
+    return (int)$this->load("rowCount", $sql, $map);
   }
 
 }
