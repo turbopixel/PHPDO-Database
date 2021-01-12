@@ -13,6 +13,8 @@ use PDOStatement;
  * with internal log stash
  *
  * @author Nico Hemkes
+ * @license MIT License
+ * @link https://github.com/turbopixel/PHPDO-Database
  */
 class PHPDO {
 
