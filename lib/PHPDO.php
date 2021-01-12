@@ -100,7 +100,7 @@ class PHPDO {
       return $this->PDO;
     }
 
-    throw new Exception("PDO object lost", 1523905129030);
+    throw new Exception("The database connection could not be established.", 1523905129030);
   }
 
   /**
@@ -148,20 +148,6 @@ class PHPDO {
   }
 
   /**
-   * Returns the last query
-   *
-   * @return string|null
-   */
-  public function getLastQuery() : ?string {
-
-    if (empty($this->logs)) {
-      return NULL;
-    }
-
-    return end($this->logs);
-  }
-
-  /**
    * Add last query to log
    *
    * @param string $query MySQL Query
@@ -197,7 +183,7 @@ class PHPDO {
         $pdoStmnt = $this->PDO->prepare($query);
         $execute  = $pdoStmnt->execute($mapping);
       } else {
-        throw new PDOException("PDO object lost", 1121415);
+        throw new PDOException("The database connection could not be established.", 1121415);
       }
     }
     catch (PDOException $e) {
@@ -223,12 +209,12 @@ class PHPDO {
       if ($this->PDO instanceof PDO) {
         $queryObj = $this->PDO->query($query);
       } else {
-        throw new PDOException("PDO object lost", 1121409);
+        throw new PDOException("The database connection could not be established.", 1121501);
       }
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363955802);
+      throw new PDOException($e->getMessage(), 1121011);
     }
 
     $this->addLog($query, gettype($queryObj));
@@ -253,12 +239,12 @@ class PHPDO {
       if ($this->PDO instanceof PDO) {
         $this->PDO->exec($query);
       } else {
-        throw new PDOException("PDO object lost", 1121115);
+        throw new PDOException("The database connection could not be established.", 1121519);
       }
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363963076);
+      throw new PDOException($e->getMessage(), 1121516);
     }
 
     $this->addLog($query);
@@ -278,7 +264,7 @@ class PHPDO {
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363969842);
+      throw new PDOException($e->getMessage(), 1121523);
     }
 
     if ($pdoStmnt instanceof PDOStatement) {
