@@ -17,7 +17,16 @@ use PDOStatement;
 class PHPDO {
 
   /**
-   * @var \PDO
+   * @var PHPDO
+   */
+  protected static $_instance;
+  /**
+   * Log queries
+   * @var bool
+   */
+  public $logging = false;
+  /**
+   * @var PDO
    */
   protected $PDO;
 
@@ -27,10 +36,52 @@ class PHPDO {
   protected $logs = [];
 
   /**
-   * Log queries
-   * @var bool
+   * PHPDO constructor.
    */
-  public $logging = false;
+  public function __construct() {
+    self::$_instance = $this;
+
+    $this->checkPhpVersion();
+  }
+
+  /**
+   * PHP version check
+   *
+   * @throws Exception
+   */
+  private function checkPhpVersion() {
+
+    if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 2 !== true) {
+      $this->logError('php version must be 7.2 or higher');
+      throw new Exception('php version must be 7.2 or higher');
+    }
+
+  }
+
+  /**
+   * Internal php error log
+   *
+   * @param string $message
+   */
+  private function logError(string $message) {
+
+    if (function_exists('error_log')) {
+      error_log($message);
+    }
+
+  }
+
+  /**
+   * @return PHPDO
+   */
+  public static function get() : self {
+
+    if (self::$_instance === NULL) {
+      self::$_instance = new self();
+    }
+
+    return self::$_instance;
+  }
 
   /**
    * Get pdo object
@@ -39,9 +90,9 @@ class PHPDO {
    *
    * @throws Exception
    */
-  public function getPdo() : \PDO {
+  public function getPdo() : PDO {
 
-    if ($this->PDO instanceof \PDO) {
+    if ($this->PDO instanceof PDO) {
       return $this->PDO;
     }
 
@@ -61,47 +112,23 @@ class PHPDO {
    * @throws Exception
    */
   public function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
-    $this->checkPhpVersion();
 
     // custom options
-    if (!empty($options)) {
-
+    if (empty($options)) {
       $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"'
       ];
-
     }
 
     try {
-      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port};charset=utf8", $user, $password, $options);
+      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363929089);
-    }
-
-    // set PHPDO instance
-    DB::setInstance($this);
-  }
-
-  /**
-   * Add last query to log
-   *
-   * @param string $query MySQL Query
-   * @param mixed $result PDO Result
-   */
-  protected function addLog(string $query, $result) {
-
-    if ($this->logging === true) {
-
-      $this->logs[] = [
-        "query"  => $query,
-        "result" => $result
-      ];
-
     }
 
   }
@@ -119,33 +146,15 @@ class PHPDO {
   /**
    * Returns the last query
    *
-   * @return string
+   * @return string|null
    */
-  public function getLastQuery() {
+  public function getLastQuery() : ?string {
+
+    if (empty($this->logs)) {
+      return NULL;
+    }
 
     return end($this->logs);
-  }
-
-  /**
-   * Runs raw mysql query
-   *
-   * @param string $query
-   *
-   * @return PDOStatement
-   */
-  public function query(string $query) {
-
-    try {
-      $queryObj = $this->PDO->query($query);
-    }
-    catch (PDOException $e) {
-      $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363955802);
-    }
-
-    $this->addLog($query, gettype($queryObj));
-
-    return $queryObj;
   }
 
   /**
@@ -175,25 +184,42 @@ class PHPDO {
   }
 
   /**
+   * Add last query to log
+   *
+   * @param string $query MySQL Query
+   * @param mixed $result PDO Result
+   */
+  protected function addLog(string $query, $result = NULL) {
+
+    if ($this->logging === true) {
+
+      $this->logs[] = [
+        "query"  => $query,
+        "result" => $result
+      ];
+
+    }
+
+  }
+
+  /**
    * Execute raw mysql query
    *
    * @param string $query
    *
-   * @return int
+   * @return void
    */
-  public function execute(string $query) : int {
+  public function execute(string $query) : void {
 
     try {
-      $exec = $this->PDO->exec($query);
+      $this->PDO->exec($query);
     }
     catch (PDOException $e) {
       $this->logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1534363963076);
     }
 
-    $this->addLog($query, $exec);
-
-    return $exec;
+    $this->addLog($query);
   }
 
   /**
@@ -221,30 +247,29 @@ class PHPDO {
   }
 
   /**
-   * Internal php error log
+   * Runs raw mysql query
    *
-   * @param string $message
+   * @param string $query
+   *
+   * @return PDOStatement|false
    */
-  private function logError(string $message) {
+  public function query(string $query) {
 
-    if (function_exists('error_log')) {
-      error_log($message);
+    try {
+      $queryObj = $this->PDO->query($query);
+    }
+    catch (PDOException $e) {
+      $this->logError($e->getMessage());
+      throw new PDOException($e->getMessage(), 1534363955802);
     }
 
-  }
+    $this->addLog($query, gettype($queryObj));
 
-  /**
-   * PHP version check
-   *
-   * @throws Exception
-   */
-  private function checkPhpVersion() {
-
-    if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 2 !== true) {
-      $this->logError('php version must be 7.2 or higher');
-      throw new Exception('php version must be 7.2 or higher');
+    if ($queryObj instanceof PDOStatement) {
+      return $queryObj;
     }
 
+    return false;
   }
 
 }
