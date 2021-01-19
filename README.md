@@ -1,6 +1,6 @@
 # PHPDO
 
-A lightweight PHP7 PDO database wrapper class.
+A lightweight PHP7 PDO database singleton wrapper class.
 
 Docs and examples: [github.com/turbopixel/PHPDO-Database](https://github.com/turbopixel/PHPDO-Database)
 
@@ -18,10 +18,9 @@ composer require turbopixel/phpdo-database
 ## Example
 
 ```php
-$PHPDO = new PHPDO();
-$PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
+PHPDO::connect("database-server.com", "database_name", "user_name", "myPassword123");
 
-$PHPDO->query("SELECT stars FROM github")->fetchAll();
+PHPDO::get()->query("SELECT stars FROM github")->fetchAll();
 ```
 
 ## class PHPDO
@@ -29,8 +28,7 @@ $PHPDO->query("SELECT stars FROM github")->fetchAll();
 ### Create database connection
 
 ```php
-$PHPDO = new PHPDO();
-$PHPDO->connect("database-server.com", "database_name", "user_name", "myPassword123");
+\PHPDO\PHPDO::connect("database-server.com", "database_name", "user_name", "myPassword123");
 ```
 
 After this, you can use the PHPDO class from everywhere.
@@ -43,7 +41,7 @@ After this, you can use the PHPDO class from everywhere.
 \PHPDO\PHPDO::get()
 ```
 
-Example: Run a query
+Example: Select rows
 
 ```php
 \PHPDO\PHPDO::get()->query("SELECT * FROM github")->fetchAll();
@@ -60,20 +58,20 @@ Example: Run a query
 **query**
 
 ```php
-$PHPDO->query("SELECT id FROM user WHERE active = 1");
+\PHPDO\PHPDO::get()->query("SELECT id FROM user WHERE active = 1");
 print_r( $pdoStmnt->fetch() );
 ```
 
 **execute**
 
 ```php
-$PHPDO->execute("UPDATE user SET active = 0 WHERE mail IS NULL");
+\PHPDO\PHPDO::get()->execute("UPDATE user SET active = 0 WHERE mail IS NULL");
 ```
 
 **Prepared Statement**
 
 ```php
-$PHPDO->prepare("UPDATE github SET stars = stars+1 WHERE id = :id", ["id" => 1234]);
+\PHPDO\PHPDO::get()->prepare("UPDATE github SET stars = stars+1 WHERE id = :id", ["id" => 1234]);
 ```
 
 ## Helper
@@ -81,14 +79,14 @@ $PHPDO->prepare("UPDATE github SET stars = stars+1 WHERE id = :id", ["id" => 123
 ### fetch() - Select a single row
 
 ```php
-$PHPDO->fetch("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
+\PHPDO\PHPDO::get()->fetch("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
-`$PHPDO->fetch()` is a helper method and replace this:
+`\PHPDO\PHPDO::get()->fetch()` is a helper method and replace this:
 
 ```php
 $rows  = [];
-$stmnt = $PHPDO->prepare("SELECT * FROM github WHERE id = ?", [
+$stmnt = \PHPDO\PHPDO::get()->prepare("SELECT * FROM github WHERE id = ?", [
   1234
 ]);
 
@@ -104,41 +102,34 @@ print_r($rows);
 ### fetchAll() - Select multiple rows
 
 ```php
-$PHPDO->fetchAll("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
+\PHPDO\PHPDO::get()->fetchAll("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
 ### rowCount() - Count rows
 
 ```php
-$PHPDO->rowCount("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
+\PHPDO\PHPDO::get()->rowCount("SELECT id FROM github WHERE id = :repo", ["repo" => 553]);
 ```
 
-### Check table exists (MySQL only)
+### isTable() - Check table exists (MySQL only)
 
 ```php
-$PHPDO->isTable("user_settings")
+\PHPDO\PHPDO::get()->isTable("user_settings")
 ```
 
 ## Internal class logging
 
-All SQL Queries stored in PHPDO::$logs (array)
+All SQL Queries stored in PHPDO::$logs (array). Attribute `\PHPDO\PHPDO::$logging` must be `true`
 
 **Enable logging**
 
-```phpregexp
-$PHPDO->logging = true
+```php
+\PHPDO\PHPDO::$logging = true;
 ```
 
 **Get internal query logs**  
-Get query logs. Attribute `$PHPDO->logging` must be set `true`
+Get query logs.
 
 ```php
-$PHPDO->getLog(); // returns an array
-```
-
-**Get last query log**  
-Class attribute $PHPDO->logging must be true!
-
-```php
-$PHPDO->getLastQuery(); // returns last sql as array
+\PHPDO\PHPDO::get()->getLog(); // returns an array
 ```

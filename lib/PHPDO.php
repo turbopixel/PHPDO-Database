@@ -9,8 +9,7 @@ use PDOStatement;
 
 /**
  * PHPDO
- * A lightweight PHP PDO database wrapper class for everyone
- * with internal log stash
+ * A lightweight PHP PDO database singleton wrapper class for everyone
  *
  * @author Nico Hemkes
  * @license MIT License
@@ -27,41 +26,30 @@ class PHPDO {
    * Log queries
    * @var bool
    */
-  public $logging = false;
+  public static $logging = false;
 
   /**
    * @var PDO
    */
-  protected $PDO;
+  private static $PDO;
 
   /**
    * @var array
    */
-  protected $logs = [];
+  private static $logs = [];
 
   /**
-   * PHPDO constructor.
+   * Constructor
    *
    * @throws Exception
    */
-  public function __construct() {
-    self::$_instance = $this;
-
-    $this->checkPhpVersion();
+  private function __construct() {
   }
 
   /**
-   * PHP version check
-   *
-   * @throws Exception
+   * Clone
    */
-  private function checkPhpVersion() {
-
-    if (PHP_MAJOR_VERSION >= 7 && PHP_MINOR_VERSION >= 2 !== true) {
-      $this->logError('wrong php version. 7.2 or higher required');
-      throw new Exception('wrong php version. 7.2 or higher required');
-    }
-
+  protected function __clone() {
   }
 
   /**
@@ -69,13 +57,15 @@ class PHPDO {
    *
    * @param string $message
    */
-  private function logError(string $message) {
+  private static function logError(string $message) {
     if (function_exists('error_log')) {
       error_log($message);
     }
   }
 
   /**
+   * Singleton
+   *
    * @return PHPDO
    */
   public static function get() : self {
@@ -96,8 +86,8 @@ class PHPDO {
    */
   public function getPdo() : PDO {
 
-    if ($this->PDO instanceof PDO) {
-      return $this->PDO;
+    if (self::$PDO instanceof PDO) {
+      return self::$PDO;
     }
 
     throw new Exception("The database connection could not be established.", 1523905129030);
@@ -115,7 +105,7 @@ class PHPDO {
    *
    * @throws Exception
    */
-  public function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
+  public static function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
 
     // custom options
     if (empty($options)) {
@@ -128,11 +118,11 @@ class PHPDO {
     }
 
     try {
-      $this->PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
+      self::$PDO = new PDO("mysql:host={$host};dbname={$database};port={$port}", $user, $password, $options);
     }
     catch (PDOException $e) {
-      $this->logError($e->getMessage());
-      throw new PDOException($e->getMessage(), 1534363929089);
+      self::logError($e->getMessage());
+      throw new PDOException($e->getMessage(), 1192204);
     }
 
   }
@@ -144,7 +134,7 @@ class PHPDO {
    */
   public function getLog() : array {
 
-    return $this->logs ?? [];
+    return self::$logs ?? [];
   }
 
   /**
@@ -153,11 +143,11 @@ class PHPDO {
    * @param string $query MySQL Query
    * @param mixed $result PDO Result
    */
-  protected function addLog(string $query, $result = NULL) {
+  protected static function addLog(string $query, $result = NULL) {
 
-    if ($this->logging === true) {
+    if (self::$logging === true) {
 
-      $this->logs[] = [
+      self::$logs[] = [
         "query"  => $query,
         "result" => $result
       ];
@@ -179,15 +169,15 @@ class PHPDO {
   public function prepare(string $query, array $mapping = []) : PDOStatement {
 
     try {
-      if ($this->PDO instanceof PDO) {
-        $pdoStmnt = $this->PDO->prepare($query);
+      if (self::$PDO instanceof PDO) {
+        $pdoStmnt = self::$PDO->prepare($query);
         $execute  = $pdoStmnt->execute($mapping);
       } else {
         throw new PDOException("The database connection could not be established.", 1121415);
       }
     }
     catch (PDOException $e) {
-      $this->logError($e->getMessage());
+      self::logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1121413);
     }
 
@@ -197,7 +187,7 @@ class PHPDO {
   }
 
   /**
-   * Runs raw mysql query
+   * Run a raw mysql query
    *
    * @param string $query
    *
@@ -206,14 +196,14 @@ class PHPDO {
   public function query(string $query) {
 
     try {
-      if ($this->PDO instanceof PDO) {
-        $queryObj = $this->PDO->query($query);
+      if (self::$PDO instanceof PDO) {
+        $queryObj = self::$PDO->query($query);
       } else {
         throw new PDOException("The database connection could not be established.", 1121501);
       }
     }
     catch (PDOException $e) {
-      $this->logError($e->getMessage());
+      self::logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1121011);
     }
 
@@ -236,14 +226,14 @@ class PHPDO {
   public function execute(string $query) : void {
 
     try {
-      if ($this->PDO instanceof PDO) {
-        $this->PDO->exec($query);
+      if (self::$PDO instanceof PDO) {
+        self::$PDO->exec($query);
       } else {
         throw new PDOException("The database connection could not be established.", 1121519);
       }
     }
     catch (PDOException $e) {
-      $this->logError($e->getMessage());
+      self::logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1121516);
     }
 
@@ -263,7 +253,7 @@ class PHPDO {
       $pdoStmnt = $this->query(sprintf("DESCRIBE `%s`", $table));
     }
     catch (PDOException $e) {
-      $this->logError($e->getMessage());
+      self::logError($e->getMessage());
       throw new PDOException($e->getMessage(), 1121523);
     }
 
