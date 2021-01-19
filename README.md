@@ -4,7 +4,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/turbopixel/PHPDO-Database/blob/master/LICENSE)
 ![GitHub contributors](https://img.shields.io/github/contributors/turbopixel/PHPDO-Database)
 ![GitHub last commit](https://img.shields.io/github/last-commit/turbopixel/PHPDO-Database)
-![packagist](https://badgen.net/packagist/v/turbopixel/PHPDO-Database)
+[![packagist](https://badgen.net/packagist/v/turbopixel/PHPDO-Database)](https://packagist.org/packages/turbopixel/phpdo-database)
 
 A lightweight PHP7 PDO database singleton wrapper class.
 
@@ -12,7 +12,7 @@ Docs and examples: [github.com/turbopixel/PHPDO-Database](https://github.com/tur
 
 ### Requirements
 
-* PHP 7.2
+* PHP 7.2+
 * MySQL/MariaDB
 
 ### Install via composer
