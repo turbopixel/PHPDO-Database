@@ -1,5 +1,11 @@
 # PHPDO
 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/turbopixel/PHPDO-Database)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/turbopixel/PHPDO-Database/blob/master/LICENSE)
+![GitHub contributors](https://img.shields.io/github/contributors/turbopixel/PHPDO-Database)
+![GitHub last commit](https://img.shields.io/github/last-commit/turbopixel/PHPDO-Database)
+![packagist](https://badgen.net/packagist/v/turbopixel/PHPDO-Database)
+
 A lightweight PHP7 PDO database singleton wrapper class.
 
 Docs and examples: [github.com/turbopixel/PHPDO-Database](https://github.com/turbopixel/PHPDO-Database)
