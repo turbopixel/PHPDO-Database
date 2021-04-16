@@ -103,6 +103,8 @@ class PHPDO {
    * @param int $port MySQL port
    * @param array $options PDO attributes (http://php.net/manual/de/pdo.setattribute.php)
    *
+   * @return PDO
+   *
    * @throws Exception
    */
   public static function connect(string $host, string $database, string $user, string $password, int $port = 3306, array $options = []) {
@@ -125,6 +127,7 @@ class PHPDO {
       throw new PDOException($e->getMessage(), 1192204);
     }
 
+    return self::$PDO;
   }
 
   /**
