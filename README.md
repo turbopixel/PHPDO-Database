@@ -6,7 +6,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/turbopixel/PHPDO-Database)
 [![packagist](https://badgen.net/packagist/v/turbopixel/PHPDO-Database)](https://packagist.org/packages/turbopixel/phpdo-database)
 
-A lightweight PHP7 PDO database singleton wrapper class.
+A lightweight PHP PDO database singleton wrapper class.
 
 Docs and examples: [github.com/turbopixel/PHPDO-Database](https://github.com/turbopixel/PHPDO-Database)
 
