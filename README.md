@@ -123,6 +123,12 @@ print_r($rows);
 \PHPDO\PHPDO::get()->isTable("user_settings")
 ```
 
+### findPrimaryIndexColumn() - Find table index column (MySQL only)
+
+```php
+\PHPDO\PHPDO::get()->findPrimaryIndexColumn("tablename", "databasename")
+```
+
 ## Internal class logging
 
 All SQL Queries stored in PHPDO::$logs (array). Attribute `\PHPDO\PHPDO::$logging` must be `true`
