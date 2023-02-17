@@ -29,20 +29,20 @@ PHPDO::connect("database-server.com", "database_name", "user_name", "myPassword1
 PHPDO::get()->query("SELECT stars FROM github")->fetchAll();
 ```
 
-An existing PDO object can be set instead
-
-```php
-// $pdoObject = new PDO();
-
-PHPDO::setPdo($pdoObject);
-```
-
 ## class PHPDO
 
 ### Create database connection
 
 ```php
 \PHPDO\PHPDO::connect("database-server.com", "database_name", "user_name", "myPassword123");
+```
+
+An existing PDO object can be set instead
+
+```php
+// $pdoObject = new PDO();
+
+PHPDO::setPdo($pdoObject);
 ```
 
 After this, you can use the PHPDO class from everywhere.
