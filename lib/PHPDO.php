@@ -97,6 +97,17 @@ class PHPDO {
   }
 
   /**
+   * Set active PDO object
+   *
+   * @param PDO $pdo
+   *
+   * @return void
+   */
+  public static function setPdo(PDO $pdo) : void {
+    self::$PDO = $pdo;
+  }
+
+  /**
    * Create database connection
    *
    * @param string $host Hostname

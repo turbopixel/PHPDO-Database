@@ -4,7 +4,7 @@
   "homepage": "https://github.com/turbopixel/PHPDO-Database",
   "type": "framework",
   "license": "MIT",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "keywords": [
     "database",
     "lightweight",
